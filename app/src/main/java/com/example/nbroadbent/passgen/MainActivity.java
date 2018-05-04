@@ -1,5 +1,7 @@
 package com.example.nbroadbent.passgen;
 
+import android.content.ClipData;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,25 +11,42 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.ClipboardManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button clipboard;
     Button gen;
     EditText len;
     TextView pass;
     CheckBox words;
     CheckBox phrase;
 
+    String password = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        clipboard = findViewById(R.id.clipboard);
         len = findViewById(R.id.len);
         gen = findViewById(R.id.gen);
         pass = findViewById(R.id.pass);
         words = findViewById(R.id.word);
         phrase = findViewById(R.id.phrase);
+
+        phrase.setVisibility(View.INVISIBLE);
+
+        clipboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Pass", password);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(MainActivity.this, password + " copied to clipboard!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         words.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Generate password.
                 Generator generator = new Generator(l);
-                String password = generator.generate();
-                System.out.println(password);
+                password = generator.generate();
                 pass.setText(password);
             }
         });
