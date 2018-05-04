@@ -9,7 +9,7 @@ class Generator {
     private int length = 8;
     private int num = 2;
     private int special = 1;
-    private double likeness = 0.3;
+    private double likeness = 0.33;
     private String pass = "";
 
     public Generator(int length) {

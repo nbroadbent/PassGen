@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         phrase = findViewById(R.id.phrase);
 
         phrase.setVisibility(View.INVISIBLE);
+        words.setVisibility(View.INVISIBLE);
 
         clipboard.setOnClickListener(new View.OnClickListener() {
             @Override
